@@ -1,34 +1,42 @@
 import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-    title: "Financify";
-    in-out property <int> counter: 42;
-    callback request-increase-value();
+    height: 400px;
+    width: 300px;
+    title: @tr("Financify");
+    icon: @image-url("financify.png");
+    in-out property <string> real_wage: "$0.0/h over 0 hours";
+    callback calc_real_wage(string, string, string, string);
     VerticalBox {
-        LineEdit {
+        wage := LineEdit {
             placeholder-text: "Wage";
             height: 50px;
         }
 
-        LineEdit {
+        commute := LineEdit {
             placeholder-text: "Length of Commute";
             height: 50px;
         }
 
-        LineEdit {
+        efficiency := LineEdit {
             placeholder-text: "Fuel Efficiency";
+            height: 50px;
+        }
+
+        gas := LineEdit {
+            placeholder-text: "Gas Price";
             height: 50px;
         }
 
         Button {
             text: "CALCULATE";
             clicked => {
-                root.request-increase-value();
+                root.calc_real_wage(wage.text, commute.text, efficiency.text, gas.text);
             }
         }
 
         Button {
-            text: "Real Wage";
+            text: root.real_wage;
             height: 50px;
             enabled: false;
         }
